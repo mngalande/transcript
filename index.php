@@ -18,31 +18,37 @@
   <body>
     <div align="center">
       <img src="public/images/Unima_Logo.jpg" height="180px" width="150px"></img>
-      <p><font size="5">Chancellor College</font></p>
+      <p><font size="5" color="#1a53ff">Chancellor College</font></p>
       <p><font size="4">Transcript Data Entry System</font></p>
       <br>
       <div class="container">
         <div class="row">
           <div class="col-sm-4 col-sm-offset-4">
-            <div class="panel panel-default">
+            <div class="panel panel-primary">
                 <div class="panel-heading">
-                  <h3 class="panel-title panel-title-primary">Log in</h3>
+                  <h3 class="panel-title panel-title-primary">Sign in to start your session</h3>
                 </div>
 
                 <div class="panel-body">
-                  <form action="" method="post">
+                  <form action="login.php" method="post">
+
                     <div class="input-group">
-                      <label for="username">Username</label>
-                      <input type="text" id="username" name="username" class="form-control" placeholder="Username">
+                      <span class="input-group-addon" id="basic-addon1">
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                      </span>
+                      <input type="text" id="username" name="username" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+                    </div>
+
+                    <br>
+                    <div class="input-group">
+                      <span class="input-group-addon" id="basic-addon1">
+                        <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+                      </span>
+                      <input type="password" id="password" name="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
                     </div>
                     <br>
                     <div class="input-group">
-                      <label for="password">Password</label>
-                      <input type="password" id="passsword" name="password" class="form-control" placeholder="Password">
-                    </div>
-                    <br>
-                    <div class="input-group">
-                      <input class="button button-md button-primary" name="submit" type="submit" value="Submit">
+                      <input class="btn btn-md btn-primary" name="submit" type="submit" value="Sign In">
                     </div>
 
                   </form>
