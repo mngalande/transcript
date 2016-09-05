@@ -4,33 +4,58 @@
 	require "../layout/header.php";
 	require "../layout/sidebar.php";
 	
+	$oldusername = '';
 	if(isset($_GET['edituser'])){
-		if(User::userExists($username)){
-			
+		$oldusername = mysql_real_escape_string(strip_tags($_GET['edituser']));
+		if(User::userExists($oldusername)){
+			$user = new User($oldusername);
+		}
+		else{
+			header("Location: users.php");
 		}
 	}
 	$feedback = '';
 
 	if(isset($_POST['submit'])){
 		//check if all fields are not empty
-		if(!empty($_POST['firstname']) && !empty($_POST['surname']) && !empty($_POST['username']) && !empty($_POST['usertype'])){
-			$firstname = mysql_real_escape_string(strip_tags($_POST['firstname']));
-			$surname = mysql_real_escape_string(strip_tags($_POST['surname']));
-			$username = mysql_real_escape_string(strip_tags($_POST['username']));
-			$usertype = mysql_real_escape_string(strip_tags($_POST['usertype']));
-			
-			if(User::usernameIsAvailable($username)){
-				$user = new User();
-				if($user->updateUser($firstname, $surname, $username, $usertype)){
-					//log the action
-					$feedback = "<font color='green'>New user successfully created!</font>";
+		if(!empty($_POST['firstname']) && !empty($_POST['surname']) && !empty($_POST['username']) && !empty($_POST['usertype'])  && !empty($_POST['oldusername'])){
+			$oldusername = mysql_real_escape_string(strip_tags($_POST['oldusername']));
+			if(User::userExists($oldusername)){
+				$firstname = mysql_real_escape_string(strip_tags($_POST['firstname']));
+				$surname = mysql_real_escape_string(strip_tags($_POST['surname']));
+				$username = mysql_real_escape_string(strip_tags($_POST['username']));
+				$usertype = mysql_real_escape_string(strip_tags($_POST['usertype']));
+				
+				if($username == $oldusername){
+					$user = new User();
+
+					if($user->updateUser($firstname, $surname, $username, $oldusername, $usertype)){
+						//log the action
+						header("Location: users.php");
+						$feedback = "<font color='green'>New user successfully created!</font>";
+					}
+					else{
+						$feedback = "<font color='red'>There was a problem updating the selected user</font>";
+					}
+				}
+				elseif(User::usernameIsAvailable($username)){
+					$user = new User();
+
+					if($user->updateUser($firstname, $surname, $username, $oldusername, $usertype)){
+						//log the action
+						header("Location: users.php");
+						$feedback = "<font color='green'>New user successfully created!</font>";
+					}
+					else{
+						$feedback = "<font color='red'>There was a problem updating the selected user</font>";
+					}	
 				}
 				else{
-					$feedback = "<font color='red'>There was a problem updating the selected user</font>";
+					$feedback = "<font color='red'>The username is already taken</font>";
 				}
 			}
 			else{
-				$feedback = "<font color='red'>The username is already taken</font>";
+				header("Location: users.php");
 			}
 		}
 		else{
@@ -46,25 +71,25 @@
 	</div>
 	<div class='panel-body'>
 		<p class='col-sm-offset-1'><?php echo $feedback ?></p>
-		<form method="POST" action="adduser.php" accept-charset="UTF-8" class="form-horizontal">
+		<form method="POST" action="edituser.php" accept-charset="UTF-8" class="form-horizontal">
 			<div class='form-group'>
 				<label for='firstname'  class='col-sm-1 control-lable'>Firstname</label>
 				<div class='col-sm-6'>
-					<input type='text' name='firstname' value="<?php if(isset($_POST['firstname']) && $feedback != "<font color='green'>New user successfully created</font>"){ echo $_POST['firstname']; } ?>" id='firstname' placeholder='Firstname' class='form-control'>
+					<input type='text' name='firstname' value="<?php echo (isset($_POST['firstname']))?$_POST['firstname']: $user->getFirstName(); ?>" id='firstname' placeholder='Firstname' class='form-control'>
 				</div>
 			</div>
 
 			<div class='form-group'>
 				<label for='surname'  class='col-sm-1'>Surname</label>
 				<div class='col-sm-6'>
-					<input type='text' name='surname' value="<?php if(isset($_POST['surname']) && $feedback != "<font color='green'>New user successfully created</font>"){ echo $_POST['surname']; } ?>" id='surname' placeholder='Surname' class='form-control'>
+					<input type='text' name='surname' value="<?php echo (isset($_POST['surname']))?$_POST['surname']: $user->getSurname(); ?>" id='surname' placeholder='Surname' class='form-control'>
 				</div>
 			</div>
 
 			<div class='form-group'>
 				<label for='username'  class='col-sm-1'>Username</label>
 				<div class='col-sm-6'>
-					<input type='text' name='username' value="<?php if(isset($_POST['username']) && $feedback != "<font color='green'>New user successfully created</font>"){ echo $_POST['username']; } ?>" id='username' placeholder='Username' class='form-control'>
+					<input type='text' name='username' value="<?php echo (isset($_POST['username']))?$_POST['username']:$oldusername; ?>" id='username' placeholder='Username' class='form-control'>
 				</div>
 			</div>
 
@@ -78,29 +103,15 @@
 			      	</select>
 				</div>
 			</div>
-
-			<div class='form-group'>
-				<label for='password'  class='col-sm-1'>Password</label>
-				<div class='col-sm-6'>
-					<input type='password' name='password' id='password' class='form-control'>
-				</div>
-			</div>
-
-			<div class='form-group'>
-				<label for='confirmpassword'  class='col-sm-1'>Confirm Password</label>
-				<div class='col-sm-6'>
-					<input type='password' name='confirmpassword' id='confirmpassword' class='form-control'>
-				</div>
-			</div>
 			
 			<div class='form-group'>
 				<div class='col-sm-offset-1 col-sm-6'>
 					<input type='submit' name='submit' value='Update User' class='btn btn-default'/>
+					<a href='users.php' class='btn btn-default'>Cancel</a>
 				</div>
 			</div>
+			<input type='hidden' name='oldusername' value="<?php echo $oldusername; ?>">
 		</form>
 	</div>
 </div>
-<?php
-	require "../layout/footer.php";
-?>
+<?php	require "../layout/footer.php"; ?>

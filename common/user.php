@@ -114,14 +114,12 @@ class User{
      * @param  string  $firstname, $surname, $username, $usertype
      * @return Response
      */
-    public function updateUser($firstname, $surname, $username, $usertype){
-        $username = $this->username;
-
-        if(mysql_query("UPDATE transcript.tblUsers SET FirstName = '$firstname', Surname = '$surname', UserName = '$username', UserType = '$usertype' WHERE username = '$username';")){
-                return true;
+    public function updateUser($firstname, $surname, $username, $oldusername, $usertype){
+        if(mysql_query("UPDATE transcript.tblUsers SET FirstName = '$firstname', Surname = '$surname', UserName = '$username', UserType = '$usertype' WHERE username = '$oldusername';")){
+            return true;
         }
         else{
-                return false;
+            return false;
         }
     }
 
