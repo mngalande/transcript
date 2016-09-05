@@ -1,5 +1,5 @@
 <?php
-
+//require "../common/access.php";
 class User{
 
     private $username;
@@ -157,7 +157,7 @@ class User{
         }
     }
 
-    public function login($username, $password){
+    static function login($username, $password){
         $password = $password;
         $result = mysql_query("SELECT * FROM transcript.tblUsers WHERE UserName = '$username' AND Password = '$password';");
         if(mysql_num_rows($result) == 1){

@@ -1,4 +1,5 @@
 <?php
+	require "../common/access.php";
 	require "../common/connect.php";
 	require "../common/user.php";
 	require "../layout/header.php";
