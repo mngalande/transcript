@@ -1,5 +1,5 @@
 <?php
-
+//require "../common/access.php";
 class User{
 
     private $username;
@@ -114,14 +114,12 @@ class User{
      * @param  string  $firstname, $surname, $username, $usertype
      * @return Response
      */
-    public function updateUser($firstname, $surname, $username, $usertype){
-        $username = $this->username;
-
-        if(mysql_query("UPDATE transcript.tblUsers SET FirstName = '$firstname', Surname = '$surname', UserName = '$username', UserType = '$usertype' WHERE username = '$username';")){
-                return true;
+    public function updateUser($firstname, $surname, $username, $oldusername, $usertype){
+        if(mysql_query("UPDATE transcript.tblUsers SET FirstName = '$firstname', Surname = '$surname', UserName = '$username', UserType = '$usertype' WHERE username = '$oldusername';")){
+            return true;
         }
         else{
-                return false;
+            return false;
         }
     }
 
@@ -159,7 +157,7 @@ class User{
         }
     }
 
-    public function login($username, $password){
+    static function login($username, $password){
         $password = $password;
         $result = mysql_query("SELECT * FROM transcript.tblUsers WHERE UserName = '$username' AND Password = '$password';");
         if(mysql_num_rows($result) == 1){

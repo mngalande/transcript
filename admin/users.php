@@ -1,4 +1,5 @@
 <?php
+	require "../common/access.php";
 	require "../common/connect.php";
 	require "../common/user.php";
 	require "../layout/header.php";
@@ -43,6 +44,8 @@
 	else{
 		echo "There are no users to display";
 	}
+
+	echo "<a href='adduser.php' class='btn btn-default'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span> Add User</a>";
 
 
 

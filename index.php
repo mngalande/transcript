@@ -1,3 +1,28 @@
+<?php
+  require "common/connect.php";
+  require "common/user.php";
+
+  $feedback = '';
+  if(isset($_POST['submit'])){
+    if(!empty($_POST['username']) && !empty($_POST['password'])){
+      $username = mysql_real_escape_string(strip_tags($_POST['username']));
+      $password = md5(mysql_real_escape_string(strip_tags($_POST['password'])));
+      if(User::login($username, $password)){
+        header("Location: admin/users.php");
+      }
+      else{
+        $feedback = "Username or password is incorrect!";
+      }
+    }
+    else{
+      $feedback = "Please fill in all fields";
+    }
+  }
+
+  
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -24,13 +49,14 @@
       <div class="container">
         <div class="row">
           <div class="col-sm-4 col-sm-offset-4">
+            <p align='center'><?php echo $feedback; ?></p>
             <div class="panel panel-primary">
                 <div class="panel-heading">
                   <h3 class="panel-title panel-title-primary">Sign in to start your session</h3>
                 </div>
 
                 <div class="panel-body">
-                  <form action="login.php" method="post">
+                  <form action="" method="post">
 
                     <div class="input-group">
                       <span class="input-group-addon" id="basic-addon1">
