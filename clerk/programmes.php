@@ -1,7 +1,7 @@
 <?php
 
 require "../layout/header.php";
-require "../common/connect.php";
+require "../common/programmes.class.php";
 	
 ?>
 
@@ -15,9 +15,9 @@ $suc = "";
 
 if(isset($_POST['send']))
 {
-	if(db::addProgramme($_POST['ProgrammeName'], $_POST['EntryRequirements'], $_POST['Duration']))
+	if(Programmes::addProgramme($_POST['ProgrammeName'], $_POST['EntryRequirements'], $_POST['Duration']))
 	{
-		$suc = "Data was successful submitted";
+		$suc = "Data was successfully submitted";
 	} 
 	else 
 	{

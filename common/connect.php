@@ -1,25 +1,36 @@
- <?php
+<?php
 
- class conn {
+set_exception_handler('conn::error');
 
-	public static function db() {
-		$servername = "localhost";
-		$username = "root";
-		$password = "personal";
-
-		try {
-			$conn = new PDO("mysql:host=$servername;dbname=transcript", $username, $password);
-			// set the PDO error mode to exception
-			$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+class conn 
+{
+	
+	private static $con = null;
+	
+	public static function db()
+	{
+		if(conn::$con == null)
+		{
+			conn::$con = new PDO('mysql:host=localhost;dbname=transcript', 'root', '');
+			conn::$con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			conn::$con->setAttribute(PDO::ATTR_CASE, PDO::CASE_LOWER);
+			conn::$con->setAttribute(PDO::ATTR_PERSISTENT, true);
 		}
-		catch(PDOException $e) {
-		    echo "Connection failed: " . $e->getMessage();
-		    exit;
-		}
-		return $conn;
+		
+		return conn::$con;
+	} 
+	
+	public function error($e){
+		die($e->getMessage() . '<br />' . $e->getTraceAsString());
 	}
-
+	
+	public static function query($var)
+	{
+		$sql = conn::db()->prepare($var['query']);
+		$sql->execute($var['args']);
+		
+		return $sql;
+	}
 }
 
-?> 
+?>
