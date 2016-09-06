@@ -20,7 +20,7 @@ class conn
 		return conn::$con;
 	} 
 	
-	public function error($e){
+	public static function error($e){
 		die($e->getMessage() . '<br />' . $e->getTraceAsString());
 	}
 	
