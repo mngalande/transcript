@@ -1,13 +1,7 @@
 <?php
 
 require "../layout/header.php";
-require "../common/programmes.class.php";
-	
-?>
-
-    <div class="container">
-      <div class="row">
-<?php 
+require "../common/programmes.class.php"; 
 
 require "../layout/sidebar.php";
 
@@ -26,9 +20,14 @@ if(isset($_POST['send']))
 }
 
 ?>
-      </div>
-	  <div>
-        <div class="col-sm-11">
+
+	<div class="panel blue-backround">
+	<div  class="content-title panel-heading">
+		Enter programmes
+	</div>
+	</div>
+
+     <div class="col-sm-11">
 	  	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
       <div class="form-group">
         <label for="exampleInputEmail1">Programme name : </label>
@@ -46,13 +45,11 @@ if(isset($_POST['send']))
 		</form>
 	  <div class="form-group">
 	    <br />
-        <p id="message">
-    	  <?php echo $suc; ?>
-        </p>
+		<?php if($suc != ""){ ?>
+			<div class="alert alert-success" role="alert"><?php echo $suc; ?></div>
+		<?php } ?>
       </div>
 	</div>
-	  </div>
-    </div>
 
 
 <?php
