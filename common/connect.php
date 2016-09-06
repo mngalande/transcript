@@ -13,7 +13,7 @@ class conn
 		{
 			conn::$con = new PDO('mysql:host=localhost;dbname=transcript', 'root', '');
 			conn::$con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			conn::$con->setAttribute(PDO::ATTR_CASE, PDO::CASE_LOWER);
+			conn::$con->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
 			conn::$con->setAttribute(PDO::ATTR_PERSISTENT, true);
 			conn::$con->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 		}
