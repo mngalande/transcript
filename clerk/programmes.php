@@ -6,12 +6,14 @@ require "../common/programmes.class.php";
 require "../layout/sidebar.php";
 
 $suc = "";
+$succ = false;
 
 if(isset($_POST['send']))
 {
 	if(Programmes::addProgramme($_POST['ProgrammeName'], $_POST['EntryRequirements'], $_POST['Duration']))
 	{
 		$suc = "Data was successfully submitted";
+		$succ = true;
 	} 
 	else 
 	{
@@ -45,8 +47,10 @@ if(isset($_POST['send']))
 		</form>
 	  <div class="form-group">
 	    <br />
-		<?php if($suc != ""){ ?>
+		<?php if($suc != "" && $succ == true){ ?>
 			<div class="alert alert-success" role="alert"><?php echo $suc; ?></div>
+		<?php } else { ?>
+			<div class="alert alert-warning" role="alert"><?php echo $suc; ?></div>
 		<?php } ?>
       </div>
 	</div>
