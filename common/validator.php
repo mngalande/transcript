@@ -29,7 +29,7 @@ class Validator{
 		if(isset($this->val['numbers'])){
 			if(!preg_match($this->integer, ((count($this->val['numbers']) > 0) ? $this->val['numbers'][0] : $this->val['numbers'])))
 				$this->result[] = "Please enter a valid input." . 
-							 (count($this->val['numbers']) > 0) ? "Only numbers are allowed on " . $this->val['numbers'][1] . " field." : "";
+							 ((count($this->val['numbers']) > 0) ? "Only numbers are allowed on " . $this->val['numbers'][1] . " field." : "");
 		}
 		if(isset($this->val['length'])){
 			if(strlen($this->val['length'][1]) != $this->val['length'][0])
