@@ -33,7 +33,7 @@
 					if($user->updateUser($firstname, $surname, $username, $oldusername, $usertype)){
 						//log the action
 						header("Location: index.php");
-						//$feedback = "<font color='green'>User successfully updated!</font>";
+						$_SESSION['feedback'] = "<font color='green'>User successfully updated!</font>";
 					}
 					else{
 						$feedback = "<font color='red'>There was a problem updating the selected user</font>";
@@ -43,7 +43,7 @@
 					if($user->updateUser($firstname, $surname, $username, $oldusername, $usertype)){
 						//log the action
 						header("Location: index.php");
-						//$feedback = "<font color='green'>User successfully updated!</font>";
+						$_SESSION['feedback'] = "<font color='green'>User successfully updated!</font>";
 					}
 					else{
 						$feedback = "<font color='red'>There was a problem updating the selected user</font>";
@@ -54,7 +54,6 @@
 				}
 			}
 			else{
-				//header("Location: users.php");
 				$feedback = "<font color='red'>Username not found.</font>";
 			}
 		}
@@ -98,9 +97,9 @@
 		<label for='usertype'  class='col-sm-2 control-label'>User Type</label>
 		<div class='col-sm-10'>
 			<select class='form-control' name='usertype'>
-				<option value='data entry clerk' <?php if($user->getUserType() ==  'data entry clerk') {echo 'selected=selected';}?>>Data Entry Clerk</option>
+				<option value='clerk' <?php if($user->getUserType() ==  'data entry clerk') {echo 'selected=selected';}?>>Data Entry Clerk</option>
 				<option value='validator' <?php if($user->getUserType() ==  'validator') {echo 'selected=selected';}?>>Validator</option>
-				<option value='administrator' <?php if($user->getUserType() ==  'administrator') {echo 'selected=selected';}?>>Administrator</option>
+				<option value='admin' <?php if($user->getUserType() ==  'administrator') {echo 'selected=selected';}?>>Administrator</option>
 	      	</select>
 		</div>
 	</div>

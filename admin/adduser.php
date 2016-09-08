@@ -1,5 +1,6 @@
 <?php
 	require "../common/access.php";
+	require "../common/authorise.php";
 	require "../common/connect.php";
 	require "../common/user.php";
 	require "../layout/header.php";
@@ -20,7 +21,8 @@
 					$user = new User();
 					if($user->createUser($firstname, $surname, $username, $usertype, $password)){
 						//log the action
-						$feedback = "<font color='green'>New user successfully created!</font>";
+						$_SESSION['feedback'] = "<font color='green'>New user successfully created!</font>";
+						header("Location: index.php");
 					}
 					else{
 						$feedback = "<font color='red'>There was a problem creating the new user</font>";
@@ -73,9 +75,9 @@
 			<label for='usertype'  class='col-sm-2 control-label' control-label>User Type</label>
 			<div class='col-sm-10'>
 				<select class='form-control' name='usertype'>
-					<option value='data entry clerk'>Data Entry Clerk</option>
+					<option value='clerk'>Data Entry Clerk</option>
 					<option value='validator'>Validator</option>
-					<option value='administrator'>Administrator</option>
+					<option value='admin'>Administrator</option>
 		      	</select>
 			</div>
 		</div>

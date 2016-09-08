@@ -8,6 +8,10 @@
 
 	$users = User::getusers();
 	$userscount = count($users);
+	if(isset($_SESSION['feedback'])){
+		echo $_SESSION['feedback'];
+		unset($_SESSION['feedback']);
+	}
 	if($userscount){
 		echo "
 			<table class='table table-stripped'>

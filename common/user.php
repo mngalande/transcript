@@ -89,7 +89,7 @@ class User{
     {
         $password = md5($password);
         $sql = conn::db()->prepare("INSERT INTO transcript.tblUsers  (FirstName, Surname, UserName, UserType, Password) VALUES(:firstname, :surname, :username, :usertype, :password)");
-        if($sql->execute(array('firstname'=>$firstname, 'surname' => $username, 'username' => $username, 'usertype' => $usertype, 'password' => $password))){
+        if($sql->execute(array('firstname'=>$firstname, 'surname' => $surname, 'username' => $username, 'usertype' => $usertype, 'password' => $password))){
             return true;
         }
         else{

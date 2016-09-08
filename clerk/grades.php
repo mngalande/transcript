@@ -1,4 +1,5 @@
 <?php
+  require "../common/access.php";
 	require "../layout/header.php";
 	require "../layout/sidebar.php";
 ?>

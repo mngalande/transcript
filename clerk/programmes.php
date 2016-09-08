@@ -1,5 +1,5 @@
 <?php
-
+require "../common/access.php";
 require "../layout/header.php";
 require "../common/programmes.class.php"; 
 require "../common/validator.php";
