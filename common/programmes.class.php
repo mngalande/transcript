@@ -18,4 +18,12 @@ class Programmes {
 		$q = conn::db()->prepare('SELECT distinct Programme from transcript.tblProgrammes');
 	}
 	
+	public static function viewProgramme(){
+		return conn::query("SELECT * FROM tblprogrammes", array());
+	}
+	
+	public static function selectProgramme($id){
+		return conn::query("SELECT * FROM tblprogrammes WHERE ProgrammeID = ?", array($id));
+	}
+	
 }
