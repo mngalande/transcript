@@ -6,16 +6,16 @@ class Programmes {
 	public static function addProgramme($ProgrammeName, $EntryRequirements, $Duration)
 	{
 		$q = conn::db()->prepare('INSERT INTO tblprogrammes SET 
-							   	        ProgrammeName = ?,
-							            EntryRequirements = ?, 
-							            Duration = ?
-							           ');
+							   	  ProgrammeName = ?,
+							      EntryRequirements = ?, 
+							      Duration = ?
+							     ');
 	    $q->execute(array($ProgrammeName, $EntryRequirements, $Duration));
 	    
 	    return true;
 	}
 	
-	public static function viewProgramme(){
+	public static function getAllProgramme(){
 		return conn::query("SELECT * FROM tblprogrammes", array());
 	}
 	

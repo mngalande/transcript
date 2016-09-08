@@ -21,7 +21,7 @@ require "../layout/sidebar.php";
       <th>Duration : </th>
       <th></th>
     </tr>
-<?php foreach(Programmes::viewProgramme()->fetchAll() as $row){ ?>
+<?php foreach(Programmes::getAllProgramme()->fetchAll() as $row){ ?>
     <tr>
       <td><span id="edtP1<?= $row['ProgrammeID'] ?>"><?= $row['ProgrammeName'] ?></span></td>
       <td><span id="edtP2<?= $row['ProgrammeID'] ?>"><?= $row['EntryRequirements'] ?></span></td>
@@ -41,7 +41,7 @@ require "../layout/footer.php";
 
 <script type="text/javascript">
 $(function(){
-	<?php foreach(Programmes::viewProgramme()->fetchAll() as $row){ ?>
+	<?php foreach(Programmes::getAllProgramme()->fetchAll() as $row){ ?>
 	    $('<?php echo '#editP' . $row['ProgrammeID']; ?>').click(function(e){
 		e.preventDefault();
 		
