@@ -17,13 +17,12 @@ class User{
      */
     static function getUsers(){
 
-        $result = mysql_query("SELECT * FROM transcript.tblUsers;");
-        if(mysql_num_rows($result)>0){
-
+        $result = conn::db()->query("SELECT * FROM transcript.tblUsers")->fetchAll();
+        if($result){
             $users = array();
-            while($row = mysql_fetch_assoc($result))
+            foreach($result as $row)
             {
-                    array_push($users, $row['UserName']);
+                array_push($users, $row['UserName']);
             }
             return $users;
         }
@@ -40,12 +39,9 @@ class User{
     public function getFirstName(){
 
         $username = $this->username;
-        $result = mysql_query("SELECT FirstName FROM transcript.tblUsers WHERE UserName = '$username';");
-        if(mysql_num_rows($result) == 1){
-
-            $row = mysql_fetch_assoc($result);
-            return $row['FirstName'];
-
+        $sql = conn::db()->prepare("SELECT FirstName FROM transcript.tblUsers WHERE UserName = :username");
+        if($sql->execute(array('username' => $username))){
+            return $sql->fetchColumn();
         }
         else{
             return false;
@@ -58,14 +54,10 @@ class User{
      *
      */
     public function getSurname(){
-
         $username = $this->username;
-        $result = mysql_query("SELECT Surname FROM transcript.tblUsers WHERE UserName = '$username';");
-        if(mysql_num_rows($result) == 1){
-
-            $row = mysql_fetch_assoc($result);
-            return $row['Surname'];
-
+        $sql = conn::db()->prepare("SELECT Surname FROM transcript.tblUsers WHERE UserName = :username");
+        if($sql->execute(array('username' => $username))){
+            return $sql->fetchColumn();
         }
         else{
             return false;
@@ -77,14 +69,10 @@ class User{
      *
      */
     public function getUserType(){
-
         $username = $this->username;
-        $result = mysql_query("SELECT UserType FROM transcript.tblUsers WHERE UserName = '$username';");
-        if(mysql_num_rows($result)>0){
-
-            $row = mysql_fetch_assoc($result);
-            return $row['UserType'];
-
+        $sql = conn::db()->prepare("SELECT UserType FROM transcript.tblUsers WHERE UserName = :username");
+        if($sql->execute(array('username' => $username))){
+            return $sql->fetchColumn();
         }
         else{
             return false;
@@ -95,27 +83,30 @@ class User{
     /**
      * Store a newly created user in storage.
      * @param  string  $firstname, $surname, $username, $password $usertype
-     *  @return Response
+     *  @return Response:number of rows inserted
      */
     public function createUser($firstname, $surname, $username, $usertype, $password)
     {
         $password = md5($password);
-        if(mysql_query("INSERT INTO transcript.tblUsers  (FirstName, Surname, UserName, UserType, Password) VALUES('$firstname', '$surname', '$username', '$usertype', '$password');")){
-                return true;
+        $sql = conn::db()->prepare("INSERT INTO transcript.tblUsers  (FirstName, Surname, UserName, UserType, Password) VALUES(:firstname, :surname, :username, :usertype, :password)");
+        if($sql->execute(array('firstname'=>$firstname, 'surname' => $username, 'username' => $username, 'usertype' => $usertype, 'password' => $password))){
+            return true;
         }
         else{
             return false;
         }
+
     }
 
     /**
      * Update the specified user in storage.
      *
      * @param  string  $firstname, $surname, $username, $usertype
-     * @return Response
+     * @return Response: number of rows updated
      */
     public function updateUser($firstname, $surname, $username, $oldusername, $usertype){
-        if(mysql_query("UPDATE transcript.tblUsers SET FirstName = '$firstname', Surname = '$surname', UserName = '$username', UserType = '$usertype' WHERE username = '$oldusername';")){
+        $sql = conn::db()->prepare("UPDATE transcript.tblUsers SET FirstName = :firstname, Surname = :surname, UserName = :username, UserType = :usertype WHERE username = :oldusername");
+        if($sql->execute(array('firstname' => $firstname, 'surname' => $surname, 'username' => $username, 'usertype' => $usertype, 'oldusername' => $oldusername))){
             return true;
         }
         else{
@@ -132,11 +123,12 @@ class User{
     public function deleteUser()
     {
         $username = $this->username;
-        if(mysql_query("DELETE FROM transcript.tblUsers where UserName = '$username';")){
-                return true;
+        $sql = conn::db()->prepare("DELETE FROM transcript.tblUsers where UserName = :username");
+        if($sql->execute(array('username' => $username))){
+            return true;
         }
         else{
-                return false;
+            return false;
         }
     }
 
@@ -148,8 +140,10 @@ class User{
      */
     static function usernameIsAvailable($username)
     {
-        $result = mysql_query("SELECT UserName FROM transcript.tblUsers where UserName = '$username';");
-        if(mysql_num_rows($result)){
+        $sql = conn::db()->prepare("SELECT COUNT(*) FROM transcript.tblUsers where UserName = :username");
+        $sql->execute(array('username' => $username));
+        $result = $sql->fetchColumn();
+        if($result){
             return false;
         }
         else{
@@ -158,12 +152,12 @@ class User{
     }
 
     static function login($username, $password){
-        $password = $password;
-        $result = mysql_query("SELECT * FROM transcript.tblUsers WHERE UserName = '$username' AND Password = '$password';");
-        if(mysql_num_rows($result) == 1){
-            $row = mysql_fetch_assoc($result);
-            $username = $row['UserName'];
-            $usertype = $row['UserType'];   
+        $sql = conn::db()->prepare("SELECT UserName, Password, UserType FROM transcript.tblUsers WHERE UserName = :username AND Password = :password");
+        $sql->execute(array('username' => $username, 'password' => $password));
+        $result = $sql->fetch();
+        if($result){
+            $username = $result['UserName'];
+            $usertype = $result['UserType'];   
             session_start();
             $_SESSION['username'] = $username;
             $_SESSION['usertype'] = $usertype;
@@ -183,8 +177,10 @@ class User{
      */
     static function userExists($username)
     {
-        $result = mysql_query("SELECT UserName FROM transcript.tblUsers where UserName = '$username';");
-        if(mysql_num_rows($result)){
+        $sql = conn::db()->prepare("SELECT COUNT(*) FROM transcript.tblUsers where UserName = :username");
+        $sql->execute(array('username' => $username));
+        $result = $sql->fetchColumn();
+        if($result == 1){
             return true;
         }
         else{

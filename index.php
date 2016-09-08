@@ -5,8 +5,8 @@
   $feedback = '';
   if(isset($_POST['submit'])){
     if(!empty($_POST['username']) && !empty($_POST['password'])){
-      $username = mysql_real_escape_string(strip_tags($_POST['username']));
-      $password = md5(mysql_real_escape_string(strip_tags($_POST['password'])));
+      $username = strip_tags($_POST['username']);
+      $password = md5(strip_tags($_POST['password']));
       if(User::login($username, $password)){
         header("Location: admin/users.php");
       }
