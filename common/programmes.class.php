@@ -14,5 +14,8 @@ class Programmes {
 	    
 	    return true;
 	}
+	public static function getProgrammes() {
+		$q = conn::db()->prepare('SELECT distinct Programme from transcript.tblProgrammes');
+	}
 	
 }
