@@ -78,27 +78,27 @@ class Validator{
 //Example code
 
 $val = new Validator(array(
-						   'date' => array(
-						                   array('04/33/3333', 'optional-parameter-can-be-ommited'), 
-						                   array('4/33/3330', 'optional-parameter-can-be-ommited'),
-						                   array('04/33/0333', 'optional-parameter-can-be-ommited')
-						                   ), 
-						   'length' => array(
-						   					 array('uuhuy', 4, 'min', 'optional-parameter-can-be-ommited'),
-						   					 array('u', 2, 'max', 'optional-parameter-can-be-ommited')
-						                    ),  
-						   'numbers' => array(
-                                              array('here', 'optional-parameter-can-be-ommited'),
-                                              array('zero', 'optional-parameter-can-be-ommited'), 
-                                              array('wax', 'optional-parameter-can-be-ommited')
-                                              ), 
-                           'spaces' => array(
-                                              array('   here', 'optional-parameter-can-be-ommited'),
-                                              array('zero', 'optional-parameter-can-be-ommited'), 
-                                              array('wax', 'optional-parameter-can-be-ommited')
-                                             ),
-                           'password' => array('hello')
-                                              ));
+			'date' => array(
+						array('04/33/3333', 'optional-parameter-can-be-ommited'), 
+						array('4/33/3330', 'optional-parameter-can-be-ommited'),
+						array('04/33/0333', 'optional-parameter-can-be-ommited')
+						), 
+			'length' => array(
+						 array('uuhuy', 4, 'min', 'optional-parameter-can-be-ommited'),
+						 array('u', 2, 'max', 'optional-parameter-can-be-ommited')
+			),  
+			'numbers' => array(
+                          array('here', 'optional-parameter-can-be-ommited'),
+                          array('zero', 'optional-parameter-can-be-ommited'), 
+                          array('wax', 'optional-parameter-can-be-ommited')
+                          ), 
+            'spaces' => array(
+                          array('   here', 'optional-parameter-can-be-ommited'),
+                          array('zero', 'optional-parameter-can-be-ommited'), 
+                          array('wax', 'optional-parameter-can-be-ommited')
+                          ),
+            'password' => array('hello')
+            ));
 
 
 
