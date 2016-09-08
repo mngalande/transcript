@@ -11,11 +11,9 @@ class conn
 	{
 		if(conn::$con == null)
 		{
-<<<<<<< HEAD
+
 			conn::$con = new PDO('mysql:host=localhost;dbname=transcript', 'root', 'personal');
-=======
-			conn::$con = new PDO('mysql:host=localhost;dbname=transcript', 'root', '');
->>>>>>> 31ed69c828caf06256b6c0d3d0dd950fcafa2bbd
+
 			conn::$con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			conn::$con->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
 			conn::$con->setAttribute(PDO::ATTR_PERSISTENT, true);

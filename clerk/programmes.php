@@ -3,7 +3,7 @@ require "../common/access.php";
 require "../layout/header.php";
 require "../common/programmes.class.php"; 
 require "../common/validator.php";
-
+require_once "../common/connect.php";
 require "../layout/sidebar.php";
 
 $suc = "";

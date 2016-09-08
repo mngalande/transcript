@@ -107,7 +107,7 @@
   <div class="form-group">
     <label for="programme" class="col-sm-2 control-label">Programme</label>
     <div class="col-sm-10">
-      <input value="<?php echo $programme;?>" type="text" class="form-control" name="programme" id="programme" placeholder="programme">
+      <input  autocomplete="off" value="<?php echo $programme;?>" type="text" class="form-control" name="programme" id="programme" placeholder="programme">
       <?php if (array_key_exists("programme",$field_errors)) { echo $field_errors["programme"]; }?>
     </div>
   </div>
@@ -165,3 +165,30 @@
       });
     });
   </script>
+              
+
+<script>
+<!--
+$(function()
+{
+  var programmes = [<?php ?>
+    { value: 'Students Portal', data: 'http://portal.cc.ac.mw/students' },
+    { value: 'Staff Portal', data: 'http://portal.cc.ac.mw/staff' },
+    { value: 'Chanco Website', data: 'http://cc.ac.mw' },
+  ];
+        
+    $('#programme').autocomplete(
+    {
+      lookup: authors,
+      onSelect: function (suggestion)
+    {
+      var selected_value = suggestion.value;
+      var selected_data = suggestion.data;    
+      //alert("Selected Value: " + selected_value + " \n Selected Data: " + selected_data);
+
+      $(location).attr('href',selected_data);
+      }
+    });
+});
+-->
+</script>
