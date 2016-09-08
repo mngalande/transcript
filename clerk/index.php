@@ -1,94 +1,194 @@
 <?php
-  require "../common/access.php";
-	require "../layout/header.php";
-	require "../layout/sidebar.php";
+  require "../layout/header.php";
+  require "../layout/sidebar.php";
+  require_once "../common/student.class.php";
 
-	$field_errors = array();
-	if (isset($_POST['submit'])) {
-		if (!empty($_POST['registrationNumber'])) {
-			$registrationNumber = strip_tags($_POST['registrationNumber']);
-		} else {
-			$field_errors = array('registrationNumber' => 'Registration number is required.');
-		}
-	}
+  $field_errors = array();
+  $registrationNumber = $fullName = $title = $enterYear = $programme = $entryType = $award = $awardYear = $gradingSystem = $other = '';
+
+  if (isset($_POST['submit'])) {
+    $registrationNumber = strip_tags($_POST['registrationNumber']);
+    $fullName = strip_tags($_POST['fullName']);
+    $title = strip_tags($_POST['title']);
+    $enterYear = strip_tags($_POST['enterYear']);
+    $programme = strip_tags($_POST['programme']);
+    $entryType = strip_tags($_POST['entryType']);
+    $award = strip_tags($_POST['award']);
+    $awardYear = strip_tags($_POST['awardYear']);
+    $gradingSystem = strip_tags($_POST['gradingSystem']);
+    if ($title == 'Other') {
+      $other = strip_tags($_POST['other']);
+    }
+
+    if (!empty($registrationNumber)) {
+      if (Student::registrationNumberExists($registrationNumber) == false) {
+        if (!empty($fullName)) {
+          if (!empty($title)) {
+            if ($title == 'Other' and !empty($other)) {
+              if (!empty($enterYear)) {
+                if ( is_numeric($enterYear) and $enterYear >= 1965 and $enterYear <= 2014) {
+                  //$field_errors = array('enterYear' => 'Enter year is required.');
+                } else {
+                  $field_errors = array('enterYear' => 'Enter year should be between 1965 and 2014.');
+                }
+              } else {
+                $field_errors = array('enterYear' => 'Enter year is required.');
+              }
+            } else {
+              $field_errors = array('other' => 'Specify title.');
+            }
+          } else {
+            $field_errors = array('title' => 'Title is required.');
+          }       
+        } else {
+          $field_errors = array('fullName' => 'Full name is required.');
+        }
+      } else {
+        $field_errors = array('registrationNumber' => 'Registration number already exists.'); 
+      }
+    } else {
+      $field_errors = array('registrationNumber' => 'Registration number is required.');
+    }
+  }
 ?>
 
 <div class="panel blue-backround">
-	<div  class="content-title panel-heading">
-		Student Details
-	</div>
+  <div  class="content-title panel-heading">
+    Student Details
+  </div>
 </div>
 
 <form method="post" class="form-horizontal">
   <div class="form-group">
     <label for="registrationNumber" class="col-sm-2 control-label">Registration Number</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" name="registrationNumber" id="registrationNumber" placeholder="Registration Number">
+      <input value="<?php echo $registrationNumber;?>" type="text" class="form-control" name="registrationNumber" id="registrationNumber" placeholder="Registration Number">
       <?php if (array_key_exists("registrationNumber",$field_errors)) { echo $field_errors["registrationNumber"]; }?>
     </div>
   </div>
   <div class="form-group">
     <label for="name" class="col-sm-2 control-label">Full Name</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" name="fullName" id="fullName" placeholder="Full Name">
+      <input value="<?php echo $fullName;?>" type="text" class="form-control" name="fullName" id="fullName" placeholder="Full Name">
+       <?php if (array_key_exists("fullName",$field_errors)) { echo $field_errors["fullName"]; }?>
     </div>
   </div>
   <div class="form-group">
     <label for="title" class="col-sm-2 control-label">Title</label>
     <div class="col-sm-10">
       <select class="form-control" name="title" id="title">
-      	
+        <option <?php if ($title == '') { echo 'selected';}?> value=''></option>
+        <option <?php if ($title == 'Mr.') { echo 'selected';}?> value='Mr.'>Mr.</option>
+        <option <?php if ($title == 'Mrs.') { echo 'selected';}?> value='Mrs.'>Mrs.</option> 
+        <option <?php if ($title == 'Miss.') { echo 'selected';}?> value='Miss.'>Miss.</option> 
+        <option <?php if ($title == 'Dr.') { echo 'selected';}?> value='Dr.'>Dr.</option> 
+        <option <?php if ($title == 'Prof.') { echo 'selected';}?> value='Prof.'>Prof.</option>
+        <option <?php if ($title == 'Other') { echo 'selected';}?> value='Other'>Other</option>   
       </select>
+      <?php if (array_key_exists("title",$field_errors)) { echo $field_errors["title"]; }?>
+      <?php
+        if ($title == 'Other') {
+          echo "<input type='text' value='$other' class='form-control top-margin' name='other' id='other' placeholder='Specify'>";
+          if (array_key_exists("other",$field_errors)) { 
+            echo "<span id='other_error'>".$field_errors["other"]."</span>";
+          }
+        }
+      ?>
+      
     </div>
   </div>
   <div class="form-group">
     <label for="enterYear" class="col-sm-2 control-label">Enter Year</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" name="enterYear" id="enterYear" placeholder="Enter Year">
+      <input value="<?php echo $enterYear;?>"type="text" class="form-control" name="enterYear" id="enterYear" placeholder="Enter Year">
+      <?php if (array_key_exists("enterYear",$field_errors)) { echo $field_errors["enterYear"]; }?>
     </div>
   </div>
   <div class="form-group">
     <label for="programme" class="col-sm-2 control-label">Programme</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" name="programme" id="programme" placeholder="programme">
+      <input  autocomplete="off" value="<?php echo $programme;?>" type="text" class="form-control" name="programme" id="programme" placeholder="programme">
+      <?php if (array_key_exists("programme",$field_errors)) { echo $field_errors["programme"]; }?>
     </div>
   </div>
   <div class="form-group">
     <label for="entryType" class="col-sm-2 control-label">Entry Type</label>
     <div class="col-sm-10">
       <select class="form-control" id="entryType" name="entryType">
-
+        <option value=""></option>
       </select>
     </div>
   </div> 
   <div class="form-group">
     <label for="award" class="col-sm-2 control-label">Award</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" name="enterYear" id="enterYear" placeholder="Award">
+      <input value="<?php echo $award;?>" type="text" class="form-control" name="award"  id="award"  placeholder="Award">
     </div>
   </div>
   <div class="form-group">
     <label for="awardYear" class="col-sm-2 control-label">Award Year</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" name="awardYear" id="awardYear" placeholder="Award Year">
+      <input value="<?php echo $awardYear;?>" type="text" class="form-control" name="awardYear" id="awardYear" placeholder="Award Year">
     </div>
   </div>
   <div class="form-group">
     <label for="gradingSystem" class="col-sm-2 control-label">Grading System</label>
     <div class="col-sm-10">
       <select class="form-control" name='gradingSystem' id="gradingSystem" name="gradingSystem">
-
+        <option value=""></option>
       </select>
     </div>
   </div>  
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
-     	<button class="btn btn-default formbutton" name="submit" type="submit">Next >></button>
+      <button class="btn btn-default formbutton" name="submit" type="submit">Next >></button>
     </div>
   </div>
 </form>
 
 
 <?php
-	require "../layout/footer.php";
+  require "../layout/footer.php";
 ?>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("select#title").change(function() {
+        var title = $(this).val();
+        if (title == 'Other') {
+          if (!$('input#other').length) {
+            $(this).after("<input type='text' class='form-control top-margin' name='other' id='other' placeholder='Specify'>");
+          }
+        } else {
+          $('input#other').remove();
+          $('span#other_error').remove();
+        }
+      });
+    });
+  </script>
+              
+
+<script>
+<!--
+$(function()
+{
+  var programmes = [<?php ?>
+    { value: 'Students Portal', data: 'http://portal.cc.ac.mw/students' },
+    { value: 'Staff Portal', data: 'http://portal.cc.ac.mw/staff' },
+    { value: 'Chanco Website', data: 'http://cc.ac.mw' },
+  ];
+        
+    $('#programme').autocomplete(
+    {
+      lookup: authors,
+      onSelect: function (suggestion)
+    {
+      var selected_value = suggestion.value;
+      var selected_data = suggestion.data;    
+      //alert("Selected Value: " + selected_value + " \n Selected Data: " + selected_data);
+
+      $(location).attr('href',selected_data);
+      }
+    });
+});
+-->
+</script>

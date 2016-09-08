@@ -11,5 +11,6 @@
     <script src="../public/bootstrap/js/holder.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../public/bootstrap/js/ie10-viewport-bug-workaround.js"></script>
+    <script type="text/javascript" src="../public/js/autocomplete-v1.2.7.min.js"></script>
   </body>
 </html>
