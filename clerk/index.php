@@ -82,7 +82,7 @@
   </div>  
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
-     	<button class="btn btn-primary" name="submit" type="submit">Next</button>
+     	<button class="btn btn-default formbutton" name="submit" type="submit">Next >></button>
     </div>
   </div>
 </form>

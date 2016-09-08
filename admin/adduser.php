@@ -96,8 +96,8 @@
 		
 		<div class='form-group'>
 			<div class='col-sm-offset-2 col-sm-10'>
-				<input type='submit' name='submit' value='Create User' class='btn btn-default'/>
-				<input type='reset' value='Clear' class='btn btn-default' />
+				<input type='submit' name='submit' value='Create User' class='btn btn-default formbutton'/>
+				<input type='reset' value='Clear' class='btn btn-default formbutton' />
 			</div>
 		</div>
 	</form>

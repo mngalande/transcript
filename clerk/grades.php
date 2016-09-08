@@ -58,7 +58,7 @@
 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
-    <div class="modal-header">
+    <div class="modal-header blue-background">
       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       <h4 class="modal-title" id="myModalLabel">Course Grade</h4>
     </div>
@@ -108,8 +108,8 @@
 </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-default formbutton" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default formbutton"><span class='glyphicon glyphicon-floppy-save'></span> Save changes</button>
       </div>
     </div>
   </div>
