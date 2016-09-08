@@ -12,7 +12,7 @@
 			$user = new User($oldusername);
 		}
 		else{
-			header("Location: users.php");
+			header("Location: index.php");
 		}
 	}
 	$feedback = '';
@@ -32,7 +32,7 @@
 				if($username == $oldusername){
 					if($user->updateUser($firstname, $surname, $username, $oldusername, $usertype)){
 						//log the action
-						header("Location: users.php");
+						header("Location: index.php");
 						//$feedback = "<font color='green'>User successfully updated!</font>";
 					}
 					else{
@@ -42,7 +42,7 @@
 				elseif(User::usernameIsAvailable($username)){
 					if($user->updateUser($firstname, $surname, $username, $oldusername, $usertype)){
 						//log the action
-						header("Location: users.php");
+						header("Location: index.php");
 						//$feedback = "<font color='green'>User successfully updated!</font>";
 					}
 					else{
@@ -107,8 +107,8 @@
 	
 	<div class='form-group'>
 		<div class='col-sm-offset-2 col-sm-10'>
-			<input type='submit' name='submit' value='Update User' class='btn btn-default'/>
-			<a href='users.php' class='btn btn-default'>Cancel</a>
+			<input type='submit' name='submit' value='Update User' class='btn btn-default formbutton'/>
+			<a href='index.php' class='btn btn-default formbutton'>Cancel</a>
 		</div>
 	</div>
 	<input type='hidden' name='oldusername' value="<?php echo $oldusername; ?>">
