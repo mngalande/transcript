@@ -23,24 +23,24 @@ class Validator{
 			if(!preg_match($this->date, $this->val['date'][$c][0]) 
 			    || preg_match($this->whiteSpace, $this->val['date'][$c][0]))
 				$this->result[] = "Please enter a valid date" . 
-				((count($this->val['date'][$c]) > 1) ? " on " . 
-				$this->val['date'][$c][1] . " field." : ".");	
+				((count($this->val['date'][$c]) > 1) ? " on <b>" . 
+				$this->val['date'][$c][1] . "</b> field." : ".");	
 			}	
 		}
 		if(isset($this->val['spaces'])){
 			for($c=0; $c < count($this->val['spaces']); $c++){
 			if(preg_match($this->whiteSpace, $this->val['spaces'][$c][0]))
 				$this->result[] = "Spaces between words are not allowed" . 
-				((count($this->val['spaces'][$c]) > 1) ? " on " . 
-				$this->val['spaces'][$c][1] . " field." : ".");	
+				((count($this->val['spaces'][$c]) > 1) ? " on <b>" . 
+				$this->val['spaces'][$c][1] . "</b> field." : ".");	
 			}	
 		}
 		if(isset($this->val['numbers'])){
 			for($c=0; $c < count($this->val['numbers']); $c++){
 			if(!preg_match($this->integer, $this->val['numbers'][$c][0]))
 				$this->result[] = "Please enter a valid input. only numbers are accepted" . 
-							      ((count($this->val['numbers'][$c]) > 1) ? " on " . 
-							        $this->val['numbers'][$c][1] . " field." : ".");								
+							      ((count($this->val['numbers'][$c]) > 1) ? " on <b>" . 
+							        $this->val['numbers'][$c][1] . "</b> field." : ".");								
 			}
 		}
 		if(isset($this->val['length'])){
@@ -48,16 +48,16 @@ class Validator{
 			if(count($this->val['length'][$c]) >= 3){
 			 if(strlen($this->val['length'][$c][0]) < $this->val['length'][$c][1] 
 			    && $this->val['length'][$c][2] == "max")
-				$this->result[] = "Please enter minimum text length of " . 
-				                   $this->val['length'][$c][1] . 
-							       ((count($this->val['length'][$c]) > 3) ? " on " . 
-							       $this->val['length'][$c][3] . " field." : ".");
+				$this->result[] = "Blank fields are not accepted " .  //Please enter minimum text length of
+				                  // $this->val['length'][$c][1] . 
+							       ((count($this->val['length'][$c]) > 3) ? " on <b>" . 
+							       $this->val['length'][$c][3] . "</b> field." : ".");
 			 elseif(strlen($this->val['length'][$c][0]) > $this->val['length'][$c][1] 
 			        && $this->val['length'][$c][2] == "min")
 				    $this->result[] = "Please enter maximum text length of " . 
 				    $this->val['length'][$c][1] . 
-					((count($this->val['length'][$c]) > 3) ? " on " . 
-					$this->val['length'][$c][3] . " field." : ".");			 
+					((count($this->val['length'][$c]) > 3) ? " on <b>" . 
+					$this->val['length'][$c][3] . "</b> field." : ".");			 
 			} else {
 				$this->result[] = "The length parameter was wrongly entered";				
 			}

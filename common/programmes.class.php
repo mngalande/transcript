@@ -15,4 +15,12 @@ class Programmes {
 	    return true;
 	}
 	
+	public static function viewProgramme(){
+		return conn::query("SELECT * FROM tblprogrammes", array());
+	}
+	
+	public static function selectProgramme($id){
+		return conn::query("SELECT * FROM tblprogrammes WHERE ProgrammeID = ?", array($id));
+	}
+	
 }
