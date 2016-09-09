@@ -31,7 +31,7 @@
       if (Student::registrationNumberExists($registrationNumber) == false) {
         if (!empty($fullName)) {
           if (!empty($title)) {
-            if ($title == 'Other' and !empty($other)) {
+            if (($title == 'Other' and !empty($other)) or $title != 'Other') {
               if (!empty($enterYear)) {
                 if ( is_numeric($enterYear) and $enterYear >= 1965 and $enterYear <= 2014) {
                   if (!empty($programme)) {
