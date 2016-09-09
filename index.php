@@ -8,7 +8,18 @@
       $username = strip_tags($_POST['username']);
       $password = md5(strip_tags($_POST['password']));
       if(User::login($username, $password)){
-        header("Location: admin/index.php");
+        switch($_SESSION['usertype']){
+          case 'admin':
+            header("Location: admin/index.php");
+          break;
+          case 'clerk':
+            header("Location: clerk/index.php");
+          break;
+          case 'validator':
+            header("Location: validator/index.php");
+          break;
+        }
+        
       }
       else{
         $feedback = "Username or password is incorrect!";

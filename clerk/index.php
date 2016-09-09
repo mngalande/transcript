@@ -1,4 +1,6 @@
 <?php
+  require "../common/access.php";
+  require "../common/authorise.php";
   require "../layout/header.php";
   require "../layout/sidebar.php";
   require_once "../common/student.class.php";
