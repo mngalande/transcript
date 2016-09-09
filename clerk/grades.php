@@ -42,7 +42,10 @@
     </tr>
 
     <tr>
-      <td></td>
+      <td>
+        <button class="btn btn-default formbutton top-margin" name="submit" type="submit"><< Back</button> 
+        <button class="btn btn-default formbutton top-margin" name="submit" type="submit">Save</button>      
+      </td>
       <td></td>
       <td></td>
       <td></td>
