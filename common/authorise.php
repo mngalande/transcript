@@ -14,6 +14,8 @@
 
 	}
 	else{
+		$_SESSION['logout'] = "<font color=red>You have been logged out because of an illegal activity.</font>";
+
 		header("Location: ../logout.php");
 	}
 

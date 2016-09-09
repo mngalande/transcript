@@ -12,7 +12,7 @@ class conn
 		if(conn::$con == null)
 		{
 
-			conn::$con = new PDO('mysql:host=localhost;dbname=transcript', 'root', '');
+			conn::$con = new PDO('mysql:host=localhost;dbname=transcript', 'root', '512ngilande!');
 
 			conn::$con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			conn::$con->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
