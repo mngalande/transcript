@@ -26,12 +26,12 @@
 <?php foreach(Grade::getAllGrades()->fetchAll() as $d){ //  CourseCode 	CourseVersion 	CourseName 	CreditHours 	CourseYearOffered ?>
     <tr>
       <td></td>
-      <td><span id="edtP1<?= $d['CourseCode'] ?>"><?= $d['CourseCode'] ?></td>
-      <td><span id="edtP2<?= $d['CourseCode'] ?>"><?= $d['CourseVersion'] ?></td>
-      <td><span id="edtP3<?= $d['CourseCode'] ?>"><?= $d['CourseName'] ?></td>
+      <td><span id="edtP1<?= $d['CourseCode'] ?>"><?= $d['CourseCode'] ?></span></td>
+      <td><span id="edtP2<?= $d['CourseCode'] ?>"><?= $d['CourseVersion'] ?></span></td>
+      <td><span id="edtP3<?= $d['CourseCode'] ?>"><?= $d['CourseName'] ?></span></td>
       <td><span id="edtP4<?= $d['CourseCode'] ?>"><?= $d['CreditHours'] ?></span></td>
       <td></td>
-      <td><span id="form<?= $d['CourseCode'] ?>"><a href="#" rel="<?= $d['CourseCode'] ?>" id="editP<?= $d['CourseCode'] ?>">Edit</a></span></td>
+      <td><span id="form<?= $d['CourseCode'] ?>"></span><a href="#" rel="<?= $d['CourseCode'] ?>" id="editP<?= $d['CourseCode'] ?>">Edit</a></td>
     </tr>
 <?php } ?>
     <tr>
@@ -149,6 +149,10 @@ $(function(){
 		echo $row['CourseCode']; ?>" value="<?php 
 		echo $row['CreditHours']; ?>" placeholder="Enter Credit Hours">'
 		)
+		
+		$('<?php echo '#editP' . $row['CourseCode']; ?>').hide()
+		$('<?php echo '#form' . $row['CourseCode']; ?>').show()
+		
 		$('<?php echo '#form' . $row['CourseCode']; ?>').html
 		(
 		'<input type="hidden" class="form-control" name="form5" id="form5<?php 
@@ -186,6 +190,7 @@ $(function(){
 		} else {
 
 		$('#load').html('')
+		
 		$('<?php echo '#edtP1' . $row['CourseCode']; 
 		?>').load('../common/ajax_load_grades.php?pn&pn1=<?php 
 		echo $row['CourseCode']; ?>');
@@ -198,11 +203,11 @@ $(function(){
 		$('<?php echo '#edtP4' . $row['CourseCode']; 
 		?>').load('../common/ajax_load_grades.php?d&e=<?php 
 		echo $row['CourseCode']; ?>');
-		
-		//$('<?php echo '#form' . $row['CourseCode']; ?>').show()
-		$('<?php echo '#form' . $row['CourseCode']; ?>').html('<a href="#" rel="<?= $row['CourseCode'] ?>" id="editPP<?= $row['CourseCode'] ?>">Edit</a>')
-		$('<?php echo '#editPP' . $row['CourseCode']; ?>').trigger('click')
-		// .html('<a href="#" rel="<?= $row['CourseCode'] ?>" id="editPP<?= $row['CourseCode'] ?>">Edit</a>');
+//
+
+		$('<?php echo '#form' . $row['CourseCode']; ?>').hide()
+		$('<?php echo '#editP' . $row['CourseCode']; ?>').show()
+
 		}
 		}
 		})

@@ -2,25 +2,13 @@
   require "common/connect.php";
   require "common/user.php";
 
-
   $feedback = '';
   if(isset($_POST['submit'])){
     if(!empty($_POST['username']) && !empty($_POST['password'])){
       $username = strip_tags($_POST['username']);
       $password = md5(strip_tags($_POST['password']));
       if(User::login($username, $password)){
-        switch($_SESSION['usertype']){
-          case 'admin':
-            header("Location: admin/index.php");
-          break;
-          case 'clerk':
-            header("Location: clerk/index.php");
-          break;
-          case 'validator':
-            header("Location: validator/index.php");
-          break;
-        }
-        
+        header("Location: admin/index.php");
       }
       else{
         $feedback = "Username or password is incorrect!";
@@ -31,7 +19,6 @@
     }
   }
 
-  
 ?>
 
 
