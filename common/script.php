@@ -5,7 +5,6 @@ header("Content-Type: application/json; charset=UTF-8");
 require_once "../common/connect.php";
 require_once "../common/validator.php";
 
-
 $succ = false;
 
 $val = new Validator(array(  

@@ -3,7 +3,7 @@
     <li class="active"><a href=''>Menu</a></li>
     <li><a href="../clerk/">New Student</a></li>
     <li><a href="../clerk/programmes.php">Programmes</a></li>
-    <li><a href="#">Courses</a></li>
+    <li><a href="../clerk/course.php">Courses</a></li>
     <li><a href="../admin/">System Users</a></li>
 
   </ul>

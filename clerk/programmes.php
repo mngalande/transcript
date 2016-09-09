@@ -21,9 +21,9 @@ if(isset($_POST['send']))
                              array($_POST['Duration'], 'Duration')
                             ),
 						   'length' => array(
-						   					 array($_POST['ProgrammeName'], 1, 'max', 'Programme Name'),
-						   					 array($_POST['EntryRequirements'], 1, 'max', 'Entry requirements'),
-											 array($_POST['Duration'], 1, 'max', 'Duration')
+						   	 array($_POST['ProgrammeName'], 1, 'max', 'Programme Name'),
+						   	 array($_POST['EntryRequirements'], 1, 'max', 'Entry requirements'),
+							 array($_POST['Duration'], 1, 'max', 'Duration')
 						                    )							
                             ));
 	 $val->test();

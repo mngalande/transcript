@@ -99,7 +99,7 @@
 			<select class='form-control' name='usertype'>
 				<option value='clerk' <?php if($user->getUserType() ==  'data entry clerk') {echo 'selected=selected';}?>>Data Entry Clerk</option>
 				<option value='validator' <?php if($user->getUserType() ==  'validator') {echo 'selected=selected';}?>>Validator</option>
-				<option value='admin' <?php if($user->getUserType() ==  'administrator') {echo 'selected=selected';}?>>Administrator</option>
+				<option value='admin' <?php if($user->getUserType() ==  'admin') {echo 'selected=selected';}?>>Administrator</option>
 	      	</select>
 		</div>
 	</div>

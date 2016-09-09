@@ -38,7 +38,7 @@ class Validator{
 		if(isset($this->val['numbers'])){
 			for($c=0; $c < count($this->val['numbers']); $c++){
 			if(!preg_match($this->integer, $this->val['numbers'][$c][0]))
-				$this->result[] = "Please enter a valid input. only numbers are accepted" . 
+				$this->result[] = "Please enter a valid input. only non negative numbers are accepted" . 
 							      ((count($this->val['numbers'][$c]) > 1) ? " on <b>" . 
 							        $this->val['numbers'][$c][1] . "</b> field." : ".");								
 			}

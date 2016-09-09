@@ -1,5 +1,5 @@
 <?php 
-require "../common/access.php";
+//require "../common/access.php";
 require "../common/authorise.php";
 require "../layout/header.php";
 require "../common/programmes.class.php"; 
@@ -42,6 +42,7 @@ require "../layout/footer.php";
 <script type="text/javascript">
 $(function(){
 	<?php foreach(Programmes::getAllProgramme()->fetchAll() as $row){ ?>
+	
 	    $('<?php echo '#editP' . $row['ProgrammeID']; ?>').click(function(e){
 		e.preventDefault();
 		
@@ -73,7 +74,6 @@ $(function(){
 		?>" class="btn btn-primary">Submit</button>'
 		)
 		
-
 		$('<?php echo '#send' . $row['ProgrammeID']; ?>').click(function(e){
 		e.preventDefault();	
 		
@@ -109,9 +109,9 @@ $(function(){
 		$('<?php echo '#edtP3' . $row['ProgrammeID']; 
 		?>').load('../common/ajax_load_programmes.php?d&d1=<?php 
 		echo $row['ProgrammeID']; ?>');
-		$('<?php echo '#form' . $row['ProgrammeID']; ?>').html('<b>EDITED</b>');
-		// <a href="#" rel="<?= $row['ProgrammeID'] 
-		// ?>" id="editP<?= $row['ProgrammeID'] ?>">Edit</a>
+		
+		//$('<?php echo '#form' . $row['ProgrammeID']; ?>').show()
+		$('<?php echo '#form' . $row['ProgrammeID']; ?>').html('<a href="#" rel="<?= $row['ProgrammeID'] ?>" id="editPP<?= $row['ProgrammeID'] ?>">Edit</a>');
 		}
 		}
 		})
