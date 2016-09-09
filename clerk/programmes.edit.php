@@ -1,5 +1,5 @@
 <?php 
-require "../common/access.php";
+//require "../common/access.php";
 require "../common/authorise.php";
 require "../layout/header.php";
 require "../common/programmes.class.php"; 
