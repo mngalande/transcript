@@ -237,8 +237,7 @@ $(function()
   var programmes = [<?php 
     for ( $i = 0; $i < count($programmes_array); $i++) { 
     echo "{value: '$programmes_array[$i]', data: '$programmes_array[$i]'},"; 
-  } ?>
-  ];
+  } ?>];
         
     $('#programme').autocomplete(
     {
