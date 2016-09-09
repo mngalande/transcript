@@ -42,7 +42,31 @@
                             if (in_array($award, ['Distinction','Credit','Pass','First_Class','Upper_Second','Lower_Second','Third_Class','Fail'])) {
                               if(!empty($awardYear)) {
                                 if ( is_numeric($awardYear) and $awardYear >= 1965 and $awardYear <= 2014) {
-
+                                  if (!empty($gradingSystem)) {
+                                    if (in_array(str_replace("_"," ", $gradingSystem), $grading_systems_array)) {
+                                     $new_student_details = array(
+                                        'registrationNumber' =>  $registrationNumber,
+                                        'fullName' =>  $fullName,
+                                        'title' =>  $title,
+                                        'enterYear' =>  $enterYear,
+                                        'programme' =>  $programme,
+                                        'entryType' =>  $entryType,
+                                        'award' =>  $award,
+                                        'awardYear' =>  $awardYear,
+                                        'gradingSystem' =>  $gradingSystem
+                                      );
+                                      if ($title == 'Other') {
+                                        $new_student_details['other'] =  $other;
+                                      }
+                                      @session_start();
+                                      $_SESSION['new_student_details'] = $new_student_details;
+                                      header("location: grades.php");
+                                    } else {
+                                      $field_errors = array('gradingSystem' => 'The grading system you have entered does not exist.');
+                                    }
+                                  } else {
+                                    $field_errors = array('gradingSystem' => 'Grading system is required.');
+                                  }
                                 } else {
                                   $field_errors = array('awardYear' => 'Award year should be between 1965 and 2014.');
                                 }
@@ -193,7 +217,7 @@
         <?php
           for ($i = 0; $i < count($grading_systems_array); $i++) {
             $option_value = str_replace(" ","_", $grading_systems_array[$i]);
-            if ($gradingSystem == $grading_systems_array[$i]) {
+            if (str_replace("_"," ", $gradingSystem) == $grading_systems_array[$i]) {
               echo "<option selected value='$option_value'>$grading_systems_array[$i]</option>";
             } else {
               echo "<option value='$option_value'>$grading_systems_array[$i]</option>";
