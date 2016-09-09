@@ -9,6 +9,7 @@ class Validator{
 	private $integer = '/^[0-9]+$/';
 	private $whiteSpace = '/\s/';
 	private $alphaNumeric = '/\W/';
+	private $decimal = '([+-]?\d+(?:\.\d+)?)';
 	public $result = null;
 	
 	public function __construct($array){
@@ -41,6 +42,15 @@ class Validator{
 				$this->result[] = "Please enter a valid input. only non negative numbers are accepted" . 
 							      ((count($this->val['numbers'][$c]) > 1) ? " on <b>" . 
 							        $this->val['numbers'][$c][1] . "</b> field." : ".");								
+			}
+		}
+		if(isset($this->val['decimal'])){
+			for($c=0; $c < count($this->val['decimal']); $c++){
+			if(!preg_match($this->decimal, $this->val['decimal'][$c][0]))
+				$this->result[] = "Please enter a valid input. only non negative ".
+								  "decimal and integer numbers are accepted" . 
+							      ((count($this->val['decimal'][$c]) > 1) ? " on <b>" . 
+							        $this->val['decimal'][$c][1] . "</b> field." : ".");								
 			}
 		}
 		if(isset($this->val['length'])){

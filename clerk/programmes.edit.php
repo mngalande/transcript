@@ -1,7 +1,5 @@
 <?php 
 
-var_dump(crypt("ggjnnnn", "rl")); exit;
-
 //require "../common/access.php";
 require "../common/authorise.php";
 require "../layout/header.php";
