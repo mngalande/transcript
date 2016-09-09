@@ -2,6 +2,11 @@
   require "../layout/header.php";
   require "../layout/sidebar.php";
   require_once "../common/student.class.php";
+  require "../common/programmes.class.php";
+  require "../common/grading_system.class.php";
+
+  $programmes_array = Programmes::getAllProgrammes()->fetchAll(PDO::FETCH_COLUMN, 1);
+  $grading_systems_array = GradingSystem::getAllGradingSystems()->fetchAll(PDO::FETCH_COLUMN, 1);
 
   $field_errors = array();
   $registrationNumber = $fullName = $title = $enterYear = $programme = $entryType = $award = $awardYear = $gradingSystem = $other = '';
@@ -27,7 +32,39 @@
             if ($title == 'Other' and !empty($other)) {
               if (!empty($enterYear)) {
                 if ( is_numeric($enterYear) and $enterYear >= 1965 and $enterYear <= 2014) {
-                  //$field_errors = array('enterYear' => 'Enter year is required.');
+                  if (!empty($programme)) {
+                    if (in_array(strtolower($programme), array_map('strtolower', $programmes_array))) {
+                      if(!empty($entryType)) {
+                        if ($entryType == 'Mature' or $entryType == 'Normal') {
+                          if (!empty($award)) {
+                            if (in_array($award, ['Distinction','Credit','Pass','First_Class','Upper_Second','Lower_Second','Third_Class','Fail'])) {
+                              if(!empty($awardYear)) {
+                                if ( is_numeric($awardYear) and $awardYear >= 1965 and $awardYear <= 2014) {
+
+                                } else {
+                                  $field_errors = array('awardYear' => 'Award year should be between 1965 and 2014.');
+                                }
+                              } else {
+                                $field_errors = array('awardYear' => 'The award year is required.');
+                              }
+                            } else {
+                              $field_errors = array('award' => 'The award you have entered doesnot exist.');
+                            }
+                          }else {
+                            $field_errors = array('award' => 'Award is required.');
+                          }
+                        } else {
+                          $field_errors = array('entryType' => 'The entry type you have entered does not exist.');
+                        }
+                      } else {
+                        $field_errors = array('entryType' => 'The entry type is required.');
+                      }
+                    } else {
+                      $field_errors = array('programme' => 'The programme you have entered does not exist.');
+                    }
+                  } else {
+                    $field_errors = array('programme' => 'Programme is required.');
+                  }
                 } else {
                   $field_errors = array('enterYear' => 'Enter year should be between 1965 and 2014.');
                 }
@@ -115,20 +152,35 @@
     <label for="entryType" class="col-sm-2 control-label">Entry Type</label>
     <div class="col-sm-10">
       <select class="form-control" id="entryType" name="entryType">
-        <option value=""></option>
+        <option <?php if ($entryType == '') { echo 'selected';}?> value=""></option>
+        <option <?php if ($entryType == 'Normal') { echo 'selected';}?> value="Normal">Normal</option>
+        <option <?php if ($entryType == 'Mature') { echo 'selected';}?> value="Mature">Mature</option>
       </select>
+      <?php if (array_key_exists("entryType",$field_errors)) { echo $field_errors["entryType"]; }?>
     </div>
   </div> 
   <div class="form-group">
     <label for="award" class="col-sm-2 control-label">Award</label>
     <div class="col-sm-10">
-      <input value="<?php echo $award;?>" type="text" class="form-control" name="award"  id="award"  placeholder="Award">
+      <select class="form-control" id="award" name="award">
+        <option value=""></option>
+        <option <?php if ($award == 'Distinction') { echo 'selected';}?> value="Distinction">Distinction</option>
+        <option <?php if ($award == 'Credit') { echo 'selected';}?> value="Credit">Credit</option>
+        <option <?php if ($award == 'Pass') { echo 'selected';}?> value="Pass">Pass</option>
+        <option <?php if ($award == 'First_Class') { echo 'selected';}?> value="First_Class">First Class (1)</option>
+        <option <?php if ($award == 'Upper_Second') { echo 'selected';}?> value="Upper_Second">Upper Second Class (2:1)</option>
+        <option <?php if ($award == 'Lower_Second') { echo 'selected';}?> value="Lower_Second">Lower Second Class (2:2)</option>
+        <option <?php if ($award == 'Third_Class') { echo 'selected';}?> value="Third_Class">Third Class (3)</option>
+        <option <?php if ($award == 'Fail') { echo 'selected';}?> value="Fail">Fail</option>
+      </select>
+      <?php if (array_key_exists("award",$field_errors)) { echo $field_errors["award"]; }?>
     </div>
   </div>
   <div class="form-group">
     <label for="awardYear" class="col-sm-2 control-label">Award Year</label>
     <div class="col-sm-10">
       <input value="<?php echo $awardYear;?>" type="text" class="form-control" name="awardYear" id="awardYear" placeholder="Award Year">
+      <?php if (array_key_exists("awardYear",$field_errors)) { echo $field_errors["awardYear"]; }?>
     </div>
   </div>
   <div class="form-group">
@@ -136,7 +188,18 @@
     <div class="col-sm-10">
       <select class="form-control" name='gradingSystem' id="gradingSystem" name="gradingSystem">
         <option value=""></option>
+        <?php
+          for ($i = 0; $i < count($grading_systems_array); $i++) {
+            if ($gradingSystem == $grading_systems_array[$i]) {
+              echo "<option selected value='$i'>$grading_systems_array[$i]</option>";
+            } else {
+              echo "<option value='$i'>$grading_systems_array[$i]</option>";
+            }
+          }
+        ?>
+
       </select>
+      <?php if (array_key_exists("gradingSystem",$field_errors)) { echo $field_errors["gradingSystem"]; }?>
     </div>
   </div>  
   <div class="form-group">
@@ -171,23 +234,16 @@
 <!--
 $(function()
 {
-  var programmes = [<?php ?>
-    { value: 'Students Portal', data: 'http://portal.cc.ac.mw/students' },
-    { value: 'Staff Portal', data: 'http://portal.cc.ac.mw/staff' },
-    { value: 'Chanco Website', data: 'http://cc.ac.mw' },
+  var programmes = [<?php 
+    for ( $i = 0; $i < count($programmes_array); $i++) { 
+    echo "{value: '$programmes_array[$i]', data: '$programmes_array[$i]'},"; 
+  } ?>
   ];
         
     $('#programme').autocomplete(
     {
-      lookup: authors,
-      onSelect: function (suggestion)
-    {
-      var selected_value = suggestion.value;
-      var selected_data = suggestion.data;    
-      //alert("Selected Value: " + selected_value + " \n Selected Data: " + selected_data);
-
-      $(location).attr('href',selected_data);
-      }
+      lookup: programmes,
+      onSelect: function (suggestion) {}
     });
 });
 -->
