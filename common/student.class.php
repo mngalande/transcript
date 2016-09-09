@@ -26,7 +26,7 @@ class Student {
 			return false;
 		}
 		return true;
-	}
+	}	
 }
 
 //echo Student::registrationNumberExists('bsc/28/09');

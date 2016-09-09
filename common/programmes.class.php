@@ -1,6 +1,6 @@
 <?php 
 
-require "../common/connect.php";
+require_once "../common/connect.php";
 
 class Programmes {
 	public static function addProgramme($ProgrammeName, $EntryRequirements, $Duration)
@@ -16,7 +16,13 @@ class Programmes {
 	}
 	
 	public static function getAllProgramme(){
-		return conn::query("SELECT * FROM tblprogrammes", array());
+		return conn::query("SELECT * FROM tblProgrammes", array());
+	}
+
+	public static function getAllProgrammes(){
+		$sql = conn::db()->prepare("SELECT * FROM tblProgrammes");
+		$sql->execute();
+		return $sql;
 	}
 	
 	public static function selectProgramme($id){
@@ -24,3 +30,4 @@ class Programmes {
 	}
 	
 }
+
