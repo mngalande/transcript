@@ -192,14 +192,14 @@
         <option value=""></option>
         <?php
           for ($i = 0; $i < count($grading_systems_array); $i++) {
+            $option_value = str_replace(" ","_", $grading_systems_array[$i]);
             if ($gradingSystem == $grading_systems_array[$i]) {
-              echo "<option selected value='$i'>$grading_systems_array[$i]</option>";
+              echo "<option selected value='$option_value'>$grading_systems_array[$i]</option>";
             } else {
-              echo "<option value='$i'>$grading_systems_array[$i]</option>";
+              echo "<option value='$option_value'>$grading_systems_array[$i]</option>";
             }
           }
         ?>
-
       </select>
       <?php if (array_key_exists("gradingSystem",$field_errors)) { echo $field_errors["gradingSystem"]; }?>
     </div>
