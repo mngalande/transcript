@@ -1,5 +1,6 @@
 <?php
 	require "../common/access.php";
+	require "../common/authorise.php";
 	require "../common/connect.php";
 	require "../common/user.php";
 	require "../layout/header.php";
@@ -27,8 +28,7 @@
 				$username = strip_tags($_POST['username']);
 				$usertype = strip_tags($_POST['usertype']);
 				$user = new User();
-				echo "old:$oldusername";
-				echo "new:username";
+
 				if($username == $oldusername){
 					if($user->updateUser($firstname, $surname, $username, $oldusername, $usertype)){
 						//log the action

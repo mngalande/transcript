@@ -1,6 +1,10 @@
 <?php
   require "common/connect.php";
   require "common/user.php";
+<<<<<<< HEAD
+=======
+  @session_start();
+>>>>>>> 61d89bc2d86dd90a4d754bc358fe7f22e668b73a
 
   $feedback = '';
   if(isset($_POST['submit'])){
@@ -49,7 +53,10 @@
       <div class="container">
         <div class="row">
           <div class="col-sm-4 col-sm-offset-4">
-            <p align='center'><?php echo $feedback; ?></p>
+
+            <p align='center'><font color=red><?php echo $feedback; ?></font></p>
+            <?php if(isset($_SESSION['logout'])) {echo $_SESSION['logout']; unset($_SESSION['logout']);}?>
+
             <div class="panel panel-primary">
                 <div class="panel-heading">
                   <h3 class="panel-title panel-title-primary">Sign in to start your session</h3>

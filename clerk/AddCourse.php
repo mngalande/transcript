@@ -23,7 +23,7 @@ $CourseName = mysqli_real_escape_string($link, $_POST['coursename']);
 $CreditHours = mysqli_real_escape_string($link, $_POST['credithours']);
 $CourseYearOffered = mysqli_real_escape_string($link, $_POST['courseyearoffered']);
  
-// Insertion query
+//Insertion query
 $sql = "INSERT INTO tblCourses (CourseCode, CourseVersion, CourseName,CreditHours, CourseYearOffered) VALUES ('$CourseCode', '$CourseVersion', '$CourseName','$CreditHours','$CourseYearOffered')";
 if(mysqli_query($link, $sql)){
    	echo "<div class='container'><p class='text-justfy' >Course Added Successfully!!</p></div>";

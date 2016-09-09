@@ -79,6 +79,23 @@ class User{
         }
     }    
 
+     /**
+     * get username of a user.
+     *Response: username
+     *
+     */
+    public function getUserName(){
+
+        $username = $this->username;
+        $sql = conn::db()->prepare("SELECT UserName FROM transcript.tblUsers WHERE UserName = :username");
+        if($sql->execute(array('username' => $username))){
+            return $sql->fetchColumn();
+        }
+        else{
+            return false;
+        }
+    }  
+
 
     /**
      * Store a newly created user in storage.
@@ -107,6 +124,11 @@ class User{
     public function updateUser($firstname, $surname, $username, $oldusername, $usertype){
         $sql = conn::db()->prepare("UPDATE transcript.tblUsers SET FirstName = :firstname, Surname = :surname, UserName = :username, UserType = :usertype WHERE username = :oldusername");
         if($sql->execute(array('firstname' => $firstname, 'surname' => $surname, 'username' => $username, 'usertype' => $usertype, 'oldusername' => $oldusername))){
+            $user = new User($_SESSION['username']);
+    
+            if($user->getUserName() == $oldusername){
+                $_SESSION['usertype'] = $usertype;
+            }
             return true;
         }
         else{

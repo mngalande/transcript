@@ -31,7 +31,7 @@
       if (Student::registrationNumberExists($registrationNumber) == false) {
         if (!empty($fullName)) {
           if (!empty($title)) {
-            if ($title == 'Other' and !empty($other)) {
+            if (($title == 'Other' and !empty($other)) or $title != 'Other') {
               if (!empty($enterYear)) {
                 if ( is_numeric($enterYear) and $enterYear >= 1965 and $enterYear <= 2014) {
                   if (!empty($programme)) {
@@ -42,7 +42,31 @@
                             if (in_array($award, ['Distinction','Credit','Pass','First_Class','Upper_Second','Lower_Second','Third_Class','Fail'])) {
                               if(!empty($awardYear)) {
                                 if ( is_numeric($awardYear) and $awardYear >= 1965 and $awardYear <= 2014) {
-
+                                  if (!empty($gradingSystem)) {
+                                    if (in_array(str_replace("_"," ", $gradingSystem), $grading_systems_array)) {
+                                     $new_student_details = array(
+                                        'registrationNumber' =>  $registrationNumber,
+                                        'fullName' =>  $fullName,
+                                        'title' =>  $title,
+                                        'enterYear' =>  $enterYear,
+                                        'programme' =>  $programme,
+                                        'entryType' =>  $entryType,
+                                        'award' =>  $award,
+                                        'awardYear' =>  $awardYear,
+                                        'gradingSystem' =>  $gradingSystem
+                                      );
+                                      if ($title == 'Other') {
+                                        $new_student_details['other'] =  $other;
+                                      }
+                                      @session_start();
+                                      $_SESSION['new_student_details'] = $new_student_details;
+                                      header("location: grades.php");
+                                    } else {
+                                      $field_errors = array('gradingSystem' => 'The grading system you have entered does not exist.');
+                                    }
+                                  } else {
+                                    $field_errors = array('gradingSystem' => 'Grading system is required.');
+                                  }
                                 } else {
                                   $field_errors = array('awardYear' => 'Award year should be between 1965 and 2014.');
                                 }
@@ -192,14 +216,14 @@
         <option value=""></option>
         <?php
           for ($i = 0; $i < count($grading_systems_array); $i++) {
-            if ($gradingSystem == $grading_systems_array[$i]) {
-              echo "<option selected value='$i'>$grading_systems_array[$i]</option>";
+            $option_value = str_replace(" ","_", $grading_systems_array[$i]);
+            if (str_replace("_"," ", $gradingSystem) == $grading_systems_array[$i]) {
+              echo "<option selected value='$option_value'>$grading_systems_array[$i]</option>";
             } else {
-              echo "<option value='$i'>$grading_systems_array[$i]</option>";
+              echo "<option value='$option_value'>$grading_systems_array[$i]</option>";
             }
           }
         ?>
-
       </select>
       <?php if (array_key_exists("gradingSystem",$field_errors)) { echo $field_errors["gradingSystem"]; }?>
     </div>

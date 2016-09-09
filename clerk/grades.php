@@ -42,7 +42,10 @@
     </tr>
 
     <tr>
-      <td></td>
+      <td>
+        <a href="index.php" class="btn btn-default formbutton top-margin"><< Back</a> 
+        <button class="btn btn-default formbutton top-margin" name="submit" type="submit">Save</button>      
+      </td>
       <td></td>
       <td></td>
       <td></td>
