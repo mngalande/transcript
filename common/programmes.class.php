@@ -1,11 +1,11 @@
 <?php 
 
-require_once "../common/connect.php";
+require "../common/connect.php";
 
 class Programmes {
 	public static function addProgramme($ProgrammeName, $EntryRequirements, $Duration)
 	{
-		$q = conn::db()->prepare('INSERT INTO tblprogrammes SET 
+		$q = conn::db()->prepare('INSERT INTO tblProgrammes SET 
 							   	  ProgrammeName = ?,
 							      EntryRequirements = ?, 
 							      Duration = ?
@@ -18,16 +18,9 @@ class Programmes {
 	public static function getAllProgramme(){
 		return conn::query("SELECT * FROM tblProgrammes", array());
 	}
-
-	public static function getAllProgrammes(){
-		$sql = conn::db()->prepare("SELECT * FROM tblProgrammes");
-		$sql->execute();
-		return $sql;
-	}
 	
 	public static function selectProgramme($id){
-		return conn::query("SELECT * FROM tblprogrammes WHERE ProgrammeID = ?", array($id));
+		return conn::query("SELECT * FROM tblProgrammes WHERE ProgrammeID = ?", array($id));
 	}
 	
 }
-

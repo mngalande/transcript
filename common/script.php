@@ -28,7 +28,7 @@ $val = new Validator(array(
 		
 if($succ == true){
 // ProgrammeID 	ProgrammeName 	EntryRequirements 	Duration
-$sql = conn::update("UPDATE tblprogrammes SET
+$sql = conn::update("UPDATE tblProgrammes SET
 					 ProgrammeName = ?,
 					 EntryRequirements = ?, 	
 					 Duration = ?

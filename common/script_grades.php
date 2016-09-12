@@ -11,6 +11,9 @@ $val = new Validator(array(
 					'numbers' => array(
                       array($_POST['form2'], 'Course Version')
                      ), 
+					 'decimal' => array(
+                      array($_POST['form4'], 'Course Hours')
+                     ),
 					'length' => array(
 					  array($_POST['form2'], 1, 'max', 'Course Version'),
 					  array($_POST['form3'], 1, 'max', 'Course Name'),
@@ -27,7 +30,7 @@ $val = new Validator(array(
 if($succ == true){ 
 //  CourseCode 	CourseVersion 	CourseName 	CreditHours 	CourseYearOffered 
 
-$sql = conn::update("UPDATE tblcourses SET
+$sql = conn::update("UPDATE tblCourses SET
 					 CourseVersion = ?,
 					 CourseName = ?, 	
 					 CreditHours = ?
