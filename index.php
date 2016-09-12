@@ -1,16 +1,15 @@
 <?php
   require "common/connect.php";
   require "common/user.php";
-<<<<<<< HEAD
-=======
+
   @session_start();
->>>>>>> 61d89bc2d86dd90a4d754bc358fe7f22e668b73a
+
 
   $feedback = '';
   if(isset($_POST['submit'])){
     if(!empty($_POST['username']) && !empty($_POST['password'])){
       $username = strip_tags($_POST['username']);
-      $password = md5(strip_tags($_POST['password']));
+      $password = strip_tags($_POST['password']);
       if(User::login($username, $password)){
         header("Location: admin/index.php");
       }
