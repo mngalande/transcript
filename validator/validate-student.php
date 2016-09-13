@@ -1,3 +1,3 @@
 <?php
 
-require "../clerk/student.edit.php";
+require_once "../clerk/student.edit.php";
