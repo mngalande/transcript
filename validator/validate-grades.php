@@ -1,5 +1,6 @@
 <?php
 //  require "../common/access.php";
+	require "../common/authorise.php";
 	require "../layout/header.php";
 	require "../layout/sidebar.php";
 	require "../common/grade.class.php";

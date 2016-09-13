@@ -8,5 +8,13 @@ class GradingSystem {
 		$sql->execute();
 		return $sql;
 	}
+	// GradingSystemName
+	public static function getGradingSystemByName($id){
+		return conn::query("SELECT * FROM tblGradingSystems AS gs
+						    INNER JOIN tblStudents AS st ON
+						    gs.GradingSystemID = st.GradingSystemID
+						    WHERE gs.GradingSystemName = ?",
+						    array($id))->fetchColumn(0);
+	}
 }
 

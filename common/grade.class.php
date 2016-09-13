@@ -11,5 +11,4 @@ class Grade {
 	public static function getProgramme($id){
 		return conn::query("SELECT * FROM tblCourses WHERE CourseCode = ?", array($id));
 	}
-	
 }

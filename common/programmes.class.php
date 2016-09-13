@@ -1,8 +1,8 @@
 <?php 
 
-require "../common/connect.php";
+require_once "../common/connect.php";
 
-class Programmes {
+class Programmes { 
 	public static function addProgramme($ProgrammeName, $EntryRequirements, $Duration)
 	{
 		$q = conn::db()->prepare('INSERT INTO tblProgrammes SET 
@@ -20,7 +20,16 @@ class Programmes {
 	}
 	
 	public static function selectProgramme($id){
-		return conn::query("SELECT * FROM tblProgrammes WHERE ProgrammeID = ?", array($id));
+		return conn::query("SELECT * FROM tblProgrammes 
+		                    WHERE ProgrammeID = ?", 
+		                    array($id));
+	}
+	
+	public static function getProgrammeIdByName($id){
+		return conn::query("SELECT * FROM tblProgrammes 
+		                    WHERE ProgrammeName = ?", 
+		                    array($id))
+		                    ->fetchColumn(0);
 	}
 	
 }

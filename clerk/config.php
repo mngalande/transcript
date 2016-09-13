@@ -1,6 +1,6 @@
 <?php
 /*connecting to a DATABASE*/
-$link = mysqli_connect("localhost", "root", "personal", "transcript");
+$link = mysqli_connect("localhost", "root", "", "transcript");
  
 // Check connection
 if($link === false){

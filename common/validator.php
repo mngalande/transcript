@@ -58,7 +58,8 @@ class Validator{
 			if(count($this->val['length'][$c]) >= 3){
 			 if(strlen($this->val['length'][$c][0]) < $this->val['length'][$c][1] 
 			    && $this->val['length'][$c][2] == "max")
-				$this->result[] = "Blank fields are not accepted " .  //Please enter minimum text length of
+				$this->result[] = "Blank fields are not accepted " .  
+								   //Please enter minimum text length of
 				                  // $this->val['length'][$c][1] . 
 							       ((count($this->val['length'][$c]) > 3) ? " on <b>" . 
 							       $this->val['length'][$c][3] . "</b> field." : ".");

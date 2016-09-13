@@ -27,7 +27,8 @@ require "../layout/sidebar.php";
       <td><span id="edtP1<?= $row['ProgrammeID'] ?>"><?= $row['ProgrammeName'] ?></span></td>
       <td><span id="edtP2<?= $row['ProgrammeID'] ?>"><?= $row['EntryRequirements'] ?></span></td>
       <td><span id="edtP3<?= $row['ProgrammeID'] ?>"><?= $row ['Duration'] ?></span></td>
-	  <td><span id="form<?= $row['ProgrammeID'] ?>"><a href="#" rel="<?= $row['ProgrammeID'] ?>" id="editP<?= $row['ProgrammeID'] ?>">Edit</a></span></td>
+	  <td><span id="form<?= $row['ProgrammeID'] ?>"></span><a href="#" rel="<?= $row['ProgrammeID'] 
+	  ?>" id="editP<?= $row['ProgrammeID'] ?>">Edit</a></td>
     </tr>
 <?php } ?>  
   </table>
@@ -65,6 +66,10 @@ $(function(){
 		echo $row['ProgrammeID']; ?>" value="<?php 
 		echo $row['Duration']; ?>" placeholder="Enter duration">'
 		)
+		
+		$('<?php echo '#editP' . $row['ProgrammeID']; ?>').hide()
+		$('<?php echo '#form' . $row['ProgrammeID']; ?>').show()
+		
 		$('<?php echo '#form' . $row['ProgrammeID']; ?>').html
 		(
 		'<input type="hidden" class="form-control" name="form4" id="form4<?php 
@@ -111,8 +116,9 @@ $(function(){
 		?>').load('../common/ajax_load_programmes.php?d&d1=<?php 
 		echo $row['ProgrammeID']; ?>');
 		
-		//$('<?php echo '#form' . $row['ProgrammeID']; ?>').show()
-		$('<?php echo '#form' . $row['ProgrammeID']; ?>').html('<a href="#" rel="<?= $row['ProgrammeID'] ?>" id="editPP<?= $row['ProgrammeID'] ?>">Edit</a>');
+		$('<?php echo '#form' . $row['ProgrammeID']; ?>').hide()
+		$('<?php echo '#editP' . $row['ProgrammeID']; ?>').show()
+		
 		}
 		}
 		})
@@ -124,4 +130,3 @@ $(function(){
 	
 });
 </script>
-</form>

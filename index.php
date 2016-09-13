@@ -1,10 +1,11 @@
 <?php
   require "common/connect.php";
   require "common/user.php";
-<<<<<<< HEAD
-=======
+
   @session_start();
->>>>>>> 61d89bc2d86dd90a4d754bc358fe7f22e668b73a
+  
+  
+
 
   $feedback = '';
   if(isset($_POST['submit'])){
