@@ -9,31 +9,25 @@
 
 	if(isset($_POST['submit'])){
 		//check if all fields are not empty
-		if(!empty($_POST['firstname']) && !empty($_POST['surname']) && !empty($_POST['username']) && !empty($_POST['usertype']) && !empty($_POST['password']) && !empty($_POST['confirmpassword'])){
-			if($_POST['password'] === $_POST['confirmpassword']){
-				$firstname = strip_tags($_POST['firstname']);
-				$surname = strip_tags($_POST['surname']);
-				$username = strip_tags($_POST['username']);
-				$usertype = strip_tags($_POST['usertype']);
-				$password = strip_tags($_POST['password']);
+		if(!empty($_POST['firstname']) && !empty($_POST['surname']) && !empty($_POST['username']) && !empty($_POST['usertype'])){
+			$firstname = strip_tags($_POST['firstname']);
+			$surname = strip_tags($_POST['surname']);
+			$username = strip_tags($_POST['username']);
+			$usertype = strip_tags($_POST['usertype']);
 
-				if(User::usernameIsAvailable($username)){
-					$user = new User();
-					if($user->createUser($firstname, $surname, $username, $usertype, $password)){
-						//log the action
-						$_SESSION['feedback'] = "<font color='green'>New user successfully created!</font>";
-						header("Location: index.php");
-					}
-					else{
-						$feedback = "<font color='red'>There was a problem creating the new user</font>";
-					}
+			if(User::usernameIsAvailable($username)){
+				$user = new User();
+				if($user->createUser($firstname, $surname, $username, $usertype)){
+					//log the action
+					$_SESSION['feedback'] = "<font color='green'>New user successfully created!</font>";
+					header("Location: index.php");
 				}
 				else{
-					$feedback = "<font color='red'>The username is already taken</font>";
+					$feedback = "<font color='red'>There was a problem creating the new user</font>";
 				}
 			}
 			else{
-				$feedback = "<font color='red'>Passwords do not match</font>";
+				$feedback = "<font color='red'>The username is already taken</font>";
 			}
 		}
 		else{
@@ -82,19 +76,6 @@
 			</div>
 		</div>
 
-		<div class='form-group'>
-			<label for='password'  class='col-sm-2 control-label'>Password</label>
-			<div class='col-sm-10'>
-				<input type='password' name='password' id='password' class='form-control'>
-			</div>
-		</div>
-
-		<div class='form-group'>
-			<label for='confirmpassword'  class='col-sm-2 control-label'>Confirm Password</label>
-			<div class='col-sm-10'>
-				<input type='password' name='confirmpassword' id='confirmpassword' class='form-control'>
-			</div>
-		</div>
 		
 		<div class='form-group'>
 			<div class='col-sm-offset-2 col-sm-10'>

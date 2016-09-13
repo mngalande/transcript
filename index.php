@@ -3,15 +3,12 @@
   require "common/user.php";
 
   @session_start();
-  
-  
-
 
   $feedback = '';
   if(isset($_POST['submit'])){
     if(!empty($_POST['username']) && !empty($_POST['password'])){
       $username = strip_tags($_POST['username']);
-      $password = md5(strip_tags($_POST['password']));
+      $password = strip_tags($_POST['password']);
       if(User::login($username, $password)){
         header("Location: admin/index.php");
       }

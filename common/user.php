@@ -174,20 +174,29 @@ class User{
     }
 
     static function login($username, $password){
-        $sql = conn::db()->prepare("SELECT UserName, Password, UserType FROM transcript.tblUsers WHERE UserName = :username AND Password = :password");
-        $sql->execute(array('username' => $username, 'password' => $password));
-        $result = $sql->fetch();
-        if($result){
-            $username = $result['UserName'];
-            $usertype = $result['UserType'];   
-            session_start();
-            $_SESSION['username'] = $username;
-            $_SESSION['usertype'] = $usertype;
-            return true;
+
+
+        $msg = User::loginLDAP($username, $password);
+
+        if($msg == 'OK'){
+
+          
+            $sql = conn::db()->prepare("SELECT UserName, UserType FROM transcript.tblUsers where UserName = :username");
+            $sql->execute(array('username' => $username));
+            $result = $sql->fetch();
+            if($result){
+                $username = $result['UserName'];
+                $usertype = $result['UserType'];   
+                session_start();
+                $_SESSION['username'] = $username;
+                $_SESSION['usertype'] = $usertype;
+                return true;
+            }
         }
-        else{
-            return false;
-        }
+
+            
+        return false;
+            
     }
 
 
@@ -210,5 +219,82 @@ class User{
         }
     }
 
-}
 
+
+
+
+
+
+
+    
+    //LDAP METHODS
+    
+    static function loginLDAP($uname, $pwd){
+        
+        //LDAP details
+        $dom = "cc.ac.mw"; 
+        $serv = "ldap://umodzi.cc.ac.mw";
+        return(User::ldap_auth($uname, $pwd, $dom, $serv)); //authenticate on LDAP
+
+    }
+
+    //LDAP authentication
+    static function ldap_auth($username, $password, $domain, $ldap_server){
+            
+        //Initialize important variables
+        $ret_value = "";
+        $server = $ldap_server;
+        $port = 389;
+        $base_dn = "ou=people,dc=cc,dc=ac,dc=mw";
+        $global_bind_dn = "cn=config";
+        $global_bind_dn_pwd = "QeZl1QWeW3";
+
+        $user_dn = "uid=".$username.",".$base_dn;
+
+        //Connect to ldap server
+        if(($conn = ldap_connect($server, $port))){
+
+                //Set ldap options before attempting to bind
+                ldap_set_option($conn, LDAP_OPT_PROTOCOL_VERSION, 3);
+                ldap_set_option($conn, LDAP_OPT_REFERRALS, 0);
+
+                //Bind with cn=config
+                $bind_rst = ldap_bind($conn, $global_bind_dn, $global_bind_dn_pwd);
+
+                    if($bind_rst){
+                        
+                        $filter = "(uid=$username)";
+                        $retreived_vars = array("userPassword");
+                        
+                        $rst = ldap_search($conn, $base_dn, $filter, $retreived_vars);
+                        
+                        $attributes = ldap_get_entries($conn, $rst);
+                        
+                        if($attributes["count"] > 0){
+                            
+                            @$pwd_bind = ldap_bind($conn, $user_dn, $password);
+                            
+                            if($pwd_bind){
+                                $ret_value = "OK";                  
+                                 
+                            } else {
+                                $ret_value = "ERR_PWD";//Incorrect password
+                            } 
+                            
+                        } else {
+                            $ret_value = "ERR_UNAME";//Username does not exist
+                        }
+                        
+                    } else {
+                        //echo ldap_error($conn);
+                        $ret_value = "ERR_BIND";//Bind failed
+                    }
+        } else {
+            $ret_value = "ERR_CONNECT"; //Connection unsuccesfull
+        }
+        
+        return $ret_value;
+        
+    }
+    
+}
