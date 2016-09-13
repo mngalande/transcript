@@ -102,11 +102,11 @@ class User{
      * @param  string  $firstname, $surname, $username, $password $usertype
      *  @return Response:number of rows inserted
      */
-    public function createUser($firstname, $surname, $username, $usertype, $password)
+    public function createUser($firstname, $surname, $username, $usertype)
     {
-        $password = md5($password);
-        $sql = conn::db()->prepare("INSERT INTO transcript.tblUsers  (FirstName, Surname, UserName, UserType, Password) VALUES(:firstname, :surname, :username, :usertype, :password)");
-        if($sql->execute(array('firstname'=>$firstname, 'surname' => $surname, 'username' => $username, 'usertype' => $usertype, 'password' => $password))){
+        $sql = conn::db()->prepare("INSERT INTO transcript.tblUsers  (FirstName, Surname, UserName, UserType) VALUES(:firstname, :surname, :username, :usertype)");
+
+        if($sql->execute(array('firstname'=>$firstname, 'surname' => $surname, 'username' => $username, 'usertype' => $usertype))){
             return true;
         }
         else{
