@@ -4,7 +4,6 @@
 
   @session_start();
 
-
   $feedback = '';
   if(isset($_POST['submit'])){
     if(!empty($_POST['username']) && !empty($_POST['password'])){

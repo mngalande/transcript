@@ -1,5 +1,7 @@
 <?php
+
 include_once 'connect.php';
+
 class Student {
 	public $registrationNumber = null;
 
@@ -27,6 +29,25 @@ class Student {
 		}
 		return true;
 	}	
+	//  
+	public static function getAllStudents(){
+		return conn::query("SELECT * FROM tblStudents AS st
+						    INNER JOIN tblProgrammes AS pg ON
+						    st.ProgrammeID = pg.ProgrammeID
+						    INNER JOIN tblGradingSystems AS gs ON
+						    st.GradingSystemID = gs.GradingSystemID", 
+						    array());
+	}
+	
+	public static function getStudent($id){
+		return conn::query("SELECT * FROM tblStudents AS st
+						    INNER JOIN tblProgrammes AS pg ON
+						    st.ProgrammeID = pg.ProgrammeID
+						    INNER JOIN tblGradingSystems AS gs ON
+						    st.GradingSystemID = gs.GradingSystemID
+						    WHERE st.RegistrationNumber = ?", 
+						    array($id));
+	}
 }
 
 //echo Student::registrationNumberExists('bsc/28/09');

@@ -1,13 +1,13 @@
 <?php
-  require "../common/access.php";
+//  require "../common/access.php";
   require "../common/authorise.php";
   require "../layout/header.php";
   require "../layout/sidebar.php";
-  require_once "../common/student.class.php";
   require "../common/programmes.class.php";
+  require_once "../common/student.class.php";
   require "../common/grading_system.class.php";
 
-  $programmes_array = Programmes::getAllProgrammes()->fetchAll(PDO::FETCH_COLUMN, 1);
+  $programmes_array = Programmes::getAllProgramme()->fetchAll(PDO::FETCH_COLUMN, 1);
   $grading_systems_array = GradingSystem::getAllGradingSystems()->fetchAll(PDO::FETCH_COLUMN, 1);
 
   $field_errors = array();

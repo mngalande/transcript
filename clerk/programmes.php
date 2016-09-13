@@ -1,6 +1,6 @@
 <?php
-require "../common/access.php";
-require "../common/authorise.php";
+//require "../common/access.php";
+//require "../common/authorise.php";
 require "../layout/header.php";
 require "../common/programmes.class.php"; 
 require "../common/validator.php";
@@ -100,7 +100,7 @@ if(isset($_POST['send']))
 	    <br />
 		<?php if($errors == null){ if($suc != "" && $succ == true){ ?>
 			<div class="alert alert-success" role="alert"><?php echo $suc; ?></div>
-		<?php } else { ?>
+		<?php } elseif($errors != null) { ?>
 			<div class="alert alert-warning" role="alert"><?php echo $suc; ?></div>
 		<?php } } ?>
       </div>
